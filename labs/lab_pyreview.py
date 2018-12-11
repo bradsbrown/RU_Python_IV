@@ -34,11 +34,6 @@ e. Create a function called wordcount() with a yield that takes the list of
 """
 
 
-def file_to_list(filepath):
-    with open(filepath) as f:
-        return [x.strip("\n") for x in f.readlines()]
-
-
 def print_len(label, item):
     print(f"{label}: {len(item)} items long.")
 
