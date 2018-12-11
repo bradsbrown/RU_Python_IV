@@ -4,6 +4,8 @@
 import random
 from string import ascii_lowercase
 
+from helpers import print_step
+
 
 """
 
@@ -35,12 +37,6 @@ e. Create a function called wordcount() with a yield that takes the list of
 def file_to_list(filepath):
     with open(filepath) as f:
         return [x.strip("\n") for x in f.readlines()]
-
-
-def print_step(step_name):
-    print()
-    print(f"**** Step {step_name} ****")
-    print()
 
 
 def print_len(label, item):
