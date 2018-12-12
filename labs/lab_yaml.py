@@ -40,9 +40,9 @@ def main():
     data = read_yaml(YAML_SOURCE_PATH)
 
     widget = data['widget']
-    widget['window']['height'] = widget['window']['height'] // 2
-    widget['window']['width'] = widget['window']['width'] // 2
-    widget['text']['size'] = widget['text']['size'] // 4
+    widget['window']['height'] //= 2
+    widget['window']['width'] //= 2
+    widget['text']['size'] //= 4
     widget['image']['alignment'] = 'justified'
 
     write_yaml(data, YAML_TARGET_PATH)
