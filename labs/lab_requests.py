@@ -52,3 +52,20 @@ def debug_mode():
     requests_log = logging.getLogger("requests.packages.urllib3")
     requests_log.setLevel(logging.DEBUG)
     requests_log.propagate = True
+
+
+def get_data():
+    data = requests.get('http://104.130.136.254').json()
+    while True:
+        if 'answer' in data:
+            return data['answer']
+        url = [v for k, v in data.items() if k != 'token'][0]
+        data= requests.post(url, json={'token': data['token']}).json()
+
+
+def main():
+    print(get_data())
+
+
+if __name__ == '__main__':
+    main()
