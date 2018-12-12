@@ -56,15 +56,18 @@ def debug_mode():
 
 def get_data():
     data = requests.get('http://104.130.136.254').json()
+    hops = 1
     while True:
         if 'answer' in data:
+            print(f'Answer found in {hops} requests.')
             return data['answer']
         url = [v for k, v in data.items() if k != 'token'][0]
-        data= requests.post(url, json={'token': data['token']}).json()
+        data = requests.post(url, json={'token': data['token']}).json()
+        hops += 1
 
 
 def main():
-    print(get_data())
+    print(f'The answer is "{get_data()}"')
 
 
 if __name__ == '__main__':
