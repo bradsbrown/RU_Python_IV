@@ -111,11 +111,15 @@ def main(use_threads=False):
     capitalize_proc = start_proc(runner, capitalize, start_q, cap_q)
     count_proc = start_proc(runner, count, cap_q, count_q)
     largest_proc = start_proc(runner, find_largest, count_q, largest_q)
+    spinup_time = time.time()
+    print(f"Spinup time of {spinup_time - start_time} seconds")
 
     # fill the starting queue
     words = file_to_list(SOURCE_FILE_PATH)
     for word in words:
         start_q.put(word)
+    data_load_time = time.time()
+    print(f"Data load time of {data_load_time - spinup_time} seconds")
 
     # collect the final results and print
     largest = (None, 0, True)
@@ -125,6 +129,7 @@ def main(use_threads=False):
             largest = (word, length, is_largest)
     word, length, _ = largest
     print(f'The largest word, at {length} characters, is "{word}"!')
+    print(f"Processing time of {time.time() - data_load_time} seconds")
     print(f"Completed in {time.time() - start_time} seconds.")
 
 
