@@ -25,12 +25,15 @@ LAB_FLASK Learning Objective: Learn to serve RESTful APIs using the Flask librar
 import datetime
 
 from flask import Flask
-from werkzeug.routing import BaseConverter
+from werkzeug.routing import BaseConverter, ValidationError
 
 
 class FlexiNumber(BaseConverter):
     def to_python(self, value):
-        return float(value)
+        try:
+            return float(value)
+        except ValueError:
+            raise ValidationError()
 
     def to_url(self, value):
         return f"{value:.2f}"
