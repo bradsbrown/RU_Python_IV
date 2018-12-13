@@ -17,14 +17,38 @@ stop_time = time.perf_counter()
 elapsed = stop_time - start_time
 """
 
+import time
 
+
+def timer(f):
+    def inner(*args, **kwargs):
+        start = time.perf_counter()
+        retval = f(*args, **kwargs)
+        print(f"Completed in {time.perf_counter() - start} seconds!")
+        return retval
+    return inner
+
+
+def memoize(f):
+    cache = {}
+    def inner(num):
+        if num not in cache:
+            cache[num] = f(num)
+        return cache[num]
+    return inner
+
+
+@memoize
+def is_prime(num):
+    for j in range(2, round(num / 2)):
+        if (num % j) == 0:
+            return False
+    return True
+
+
+@timer
 def time_me(item):
     """time this function for various calls"""
-    def is_prime(num):
-        for j in range(2, num):
-            if (num % j) == 0:
-                return False
-        return True
 
     index = 0
     check = 0
@@ -36,6 +60,6 @@ def time_me(item):
 
 
 if __name__ == "__main__":
-    for step in range(10):
+    for step in range(15):
         # run your decorated function instead
-        time_me(200)
+        time_me(2**step)
