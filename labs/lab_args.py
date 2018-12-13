@@ -24,12 +24,15 @@ LAB_ARGS Learning Objective: Learn to modify, receive, and work with arguments t
 """
 
 
-def kwarg_it_all(**kwargs):
-    print("Kwarg values are:\n\t" + "\n\t".join([f"{k}: {v}" for k, v in kwargs.items()]))
+def print_args(*args, **kwargs):
+    if args:
+        print("Arg values are:\n\t" + '\n\t'.join([f"{x}" for x in args]))
+    if kwargs:
+        print("Kwarg values are:\n\t" + "\n\t".join([f"{k}: {v}" for k, v in kwargs.items()]))
 
 
 def key_the_pos(*args):
-    kwarg_it_all(**{f"arg{i}": v for i, v in enumerate(args)})
+    print_args(**{f"arg{i}": v for i, v in enumerate(args)})
 
 
 def _is_pos_int(value):
@@ -39,7 +42,7 @@ def _is_pos_int(value):
 def validate_the_pos(*args):
     if not all([_is_pos_int(x) for x in args]):
         raise ValueError(f"Not all args were integers greater than zero: {args}")
-    key_the_pos(*args)
+    print_args(*args)
 
 
 def test_validate_failure(*args):
