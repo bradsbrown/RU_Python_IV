@@ -19,24 +19,28 @@ b. Write a print_object_flags function that uses the is_* functions to find the 
 from pathlib import Path
 
 
+def _check_attrs(obj, *attrs):
+    return all([hasattr(obj, f"__{x}__") for x in attrs])
+
+
 def is_callable(obj):
     """ returns True if the object is callable """
-    return hasattr(obj, "__call__")
+    return _check_attrs(obj, 'call')
 
 
 def is_with(obj):
     """ returns True if the object can be used in a "with" context """
-    return hasattr(obj, "__enter__") and hasattr(obj, "__exit__")
+    return _check_attrs(obj, 'enter', 'exit')
 
 
 def is_math(obj):
     """ returns True if the object supports +, -, /, and * """
-    return all(hasattr(obj, f"__{x}__") for x in ("add", "sub", "mul", "truediv"))
+    return _check_attrs(obj, 'add', 'sub', 'mul', 'truediv')
 
 
 def is_iterable(obj):
     """ returns True if the object is iterable """
-    return hasattr(obj, "__iter__")
+    return _check_attrs(obj, 'iter')
 
 
 FLAGS_TO_CHECK = {
