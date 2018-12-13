@@ -25,8 +25,7 @@ LAB_ARGS Learning Objective: Learn to modify, receive, and work with arguments t
 
 
 def kwarg_it_all(**kwargs):
-    print("Kwarg values are:")
-    print("\t" + "\n\t".join([f"{k}: {v}" for k, v in kwargs.items()]))
+    print("Kwarg values are:\n\t" + "\n\t".join([f"{k}: {v}" for k, v in kwargs.items()]))
 
 
 def key_the_pos(*args):
