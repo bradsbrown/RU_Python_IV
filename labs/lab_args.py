@@ -22,3 +22,37 @@ LAB_ARGS Learning Objective: Learn to modify, receive, and work with arguments t
     argument doesn't validate raise a ValueError.
 
 """
+
+
+def kwarg_it_all(**kwargs):
+    print("Kwarg values are:")
+    print("\t" + "\n\t".join([f"{k}: {v}" for k, v in kwargs.items()]))
+
+
+def key_the_pos(*args):
+    kwarg_it_all(**{f"arg{i}": v for i, v in enumerate(args)})
+
+
+def _is_pos_int(value):
+    return isinstance(value, int) and value > 0
+
+
+def validate_the_pos(*args):
+    if not all([_is_pos_int(x) for x in args]):
+        raise ValueError(f"Not all args were integers greater than zero: {args}")
+    key_the_pos(*args)
+
+
+def test_validate_failure(*args):
+    try:
+        validate_the_pos(*args)
+    except ValueError as e:
+        print(f"Expected ValueError was raised: {e}")
+    else:
+        print(f"Oops! These args should have raised a ValueError: {args}")
+
+
+if __name__ == "__main__":
+    validate_the_pos(3, 5, 6, 7, 1, 12)
+    test_validate_failure("a", 3, 5, 6)
+    test_validate_failure(1, 2, 3, -5)
