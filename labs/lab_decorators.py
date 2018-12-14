@@ -20,13 +20,16 @@ elapsed = stop_time - start_time
 import time
 
 
-def timer(f):
-    def inner(*args, **kwargs):
-        start = time.perf_counter()
-        retval = f(*args, **kwargs)
-        print(f"Completed in {time.perf_counter() - start} seconds!")
-        return retval
-    return inner
+def timer(f=None, num=5):
+    def real_timer(f):
+        def inner(*args, **kwargs):
+            start = time.perf_counter()
+            retval = f(*args, **kwargs)
+            print(f'number is {num}')
+            print(f"Completed in {time.perf_counter() - start} seconds!")
+            return retval
+        return inner
+    return real_timer(f) if f else real_timer
 
 
 def memoize(f):
@@ -60,6 +63,6 @@ def time_me(item):
 
 
 if __name__ == "__main__":
-    for step in range(15):
+    for step in range(10):
         # run your decorated function instead
         time_me(2**step)
